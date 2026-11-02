@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#171a1f" />
+    <meta name="description" content="ShotDesk turns screenshot folders into a local, searchable library with OCR, image details, colors, and collections." />
+    <title>ShotDesk — Find it by what it shows</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-copy="skip">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="ShotDesk home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>shot<span class="brand-muted">desk</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#workflow" data-copy="workflowNav">Workflow</a>
+        <a href="#local-first" data-copy="privacyNav">Local-first</a>
+        <a href="#details" data-copy="detailsNav">Image details</a>
+      </nav>
+      <div class="header-actions">
+        <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language">FR</button>
+        <a class="button button-small" href="https://github.com/numera11y/shotdesk/releases" target="_blank" rel="noreferrer" data-copy="releaseNav">Preview releases <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot"></span><span data-copy="eyebrow">LOCAL INDEX · TECHNICAL PREVIEW</span></p>
+          <h1 id="hero-title" data-copy="headline">Find the screenshot by what it shows.</h1>
+          <p class="hero-description" data-copy="intro">ShotDesk reads your chosen screenshots on your device, then lets you search the words, image details, and colors you remember.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://github.com/numera11y/shotdesk/releases" target="_blank" rel="noreferrer"><span data-copy="primaryCta">Explore preview releases</span><span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#workflow"><span data-copy="secondaryCta">Trace one image</span><span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="proof-line" aria-label="Product properties">
+            <span><b>01</b><span data-copy="proofOne">Chosen folders only</span></span>
+            <span><b>02</b><span data-copy="proofTwo">SQLite FTS5</span></span>
+            <span><b>03</b><span data-copy="proofThree">No image uploads</span></span>
+          </div>
+        </div>
+
+        <figure class="pipeline" aria-labelledby="pipeline-title">
+          <figcaption class="pipeline-heading">
+            <span id="pipeline-title" data-copy="pipelineTitle">A screenshot, indexed locally</span>
+            <span class="sample-label" data-copy="syntheticLabel">Illustrative sample</span>
+          </figcaption>
+          <div class="pipeline-body">
+            <div class="sample-file">
+              <div class="sample-screen" aria-hidden="true">
+                <div class="sample-window-bar"><i></i><i></i><i></i><span>REVIEW-NOTES.PNG</span></div>
+                <div class="sample-screen-content"><div class="sample-sidebar"></div><div class="sample-lines"><i></i><i></i><i></i><b>Q4 REVIEW</b><i></i><i></i></div><div class="sample-chart"><i></i><i></i><i></i><i></i><i></i></div></div>
+              </div>
+              <div class="file-caption"><span class="file-icon">PNG</span><span><b>review-notes.png</b><small data-copy="localFile">Original stays in its folder</small></span></div>
+            </div>
+            <div class="pipeline-steps">
+              <div class="pipeline-step step-blue"><span class="step-number">01</span><div><b data-copy="stepOneTitle">Image facts</b><small data-copy="stepOneBody">1919 × 1031 · ratio · embedded EXIF</small></div><span class="step-state">LOCAL</span></div>
+              <div class="pipeline-connector" aria-hidden="true"></div>
+              <div class="pipeline-step step-green"><span class="step-number">02</span><div><b data-copy="stepTwoTitle">Color palette</b><small data-copy="stepTwoBody">Blue · gray · white</small></div><span class="step-state">LOCAL</span></div>
+              <div class="pipeline-connector" aria-hidden="true"></div>
+              <div class="pipeline-step step-amber"><span class="step-number">03</span><div><b data-copy="stepThreeTitle">Text recognition</b><small data-copy="stepThreeBody">PP-OCRv6 · ONNX · on demand</small></div><span class="step-state">LOCAL</span></div>
+              <div class="pipeline-connector" aria-hidden="true"></div>
+              <div class="search-result"><span class="result-mark" aria-hidden="true">⌕</span><div><small data-copy="resultLabel">SEARCH RESULT</small><b data-copy="resultText">“Q4 review” finds this capture</b></div><span class="result-match">FTS5</span></div>
+            </div>
+          </div>
+          <div class="pipeline-foot"><span><i></i><span data-copy="pipelineFoot">After model setup, indexing works offline.</span></span><span class="mono">NO CLOUD INDEX</span></div>
+        </figure>
+      </section>
+
+      <section class="workflow-section" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-intro"><p class="eyebrow" data-copy="workflowEyebrow">THE INDEXING PATH</p><h2 id="workflow-title" data-copy="workflowTitle">A useful index, not another place to upload.</h2><p data-copy="workflowIntro">ShotDesk keeps a reference to each original file and builds a separate local index for the things you want to find.</p></div>
+        <div class="workflow-rail">
+          <article class="workflow-step"><span class="workflow-index">A</span><h3 data-copy="workflowA">Choose folders</h3><p data-copy="workflowABody">Only folders you select enter the library. Originals stay where they are.</p></article>
+          <article class="workflow-step"><span class="workflow-index">B</span><h3 data-copy="workflowB">Analyze images</h3><p data-copy="workflowBBody">Dimensions, available EXIF fields, and dominant colors are read locally. GPS is not stored.</p></article>
+          <article class="workflow-step"><span class="workflow-index">C</span><h3 data-copy="workflowC">Search what you recall</h3><p data-copy="workflowCBody">Find captures by filename, folder, OCR text, or color names in English and French.</p></article>
+        </div>
+      </section>
+
+      <section class="technical-section" id="details" aria-labelledby="details-title">
+        <div class="technical-heading"><div><p class="eyebrow" data-copy="detailsEyebrow">WHAT THE LOCAL INDEX STORES</p><h2 id="details-title" data-copy="detailsTitle">Useful facts, kept close to the image.</h2></div><span class="technical-note" data-copy="detailsNote">EXIF fields are optional; many screenshots have none.</span></div>
+        <div class="technical-table" role="table" aria-label="Indexed image details">
+          <div class="technical-row technical-header" role="row"><span data-copy="tableField">Field</span><span data-copy="tableSource">Source</span><span data-copy="tableUse">Useful for</span></div>
+          <div class="technical-row" role="row"><b data-copy="rowDimensions">Dimensions &amp; ratio</b><span>Decoded pixels</span><span data-copy="rowDimensionsUse">Identifying screen size and orientation</span></div>
+          <div class="technical-row" role="row"><b>EXIF / DPI</b><span>Embedded metadata</span><span data-copy="rowExifUse">Camera facts and resolution, when present</span></div>
+          <div class="technical-row" role="row"><b data-copy="rowColors">Dominant colors</b><span>64 × 64 sample</span><span data-copy="rowColorsUse">Searchable color names and palette chips</span></div>
+          <div class="technical-row" role="row"><b data-copy="rowText">Recognized text</b><span>PP-OCRv6 small · ONNX</span><span data-copy="rowTextUse">Search text within the screenshot</span></div>
+          <div class="technical-row" role="row"><b data-copy="rowSearch">Search index</b><span>SQLite FTS5</span><span data-copy="rowSearchUse">Names, paths, text, and color aliases</span></div>
+        </div>
+      </section>
+
+      <section class="privacy-section" id="local-first" aria-labelledby="privacy-title">
+        <div class="privacy-stamp"><span class="stamp-mark" aria-hidden="true">SD</span><span class="mono" data-copy="privacyStamp">LOCAL BY DESIGN</span></div>
+        <div><p class="eyebrow" data-copy="privacyEyebrow">YOUR SCREENSHOTS STAY YOURS</p><h2 id="privacy-title" data-copy="privacyTitle">No account. No upload. No moved originals.</h2><p data-copy="privacyBody">The SQLite library, thumbnails, collection membership, and OCR results are stored on this device. OCR models download only when you enable text search; after setup, recognition can run offline.</p></div>
+        <ul><li data-copy="privacyOne">Images are never sent to a cloud service.</li><li data-copy="privacyTwo">GPS coordinates are not stored.</li><li data-copy="privacyThree">Remove a folder from the index without deleting its files.</li></ul>
+      </section>
+
+      <section class="release-section" id="releases" aria-labelledby="release-title">
+        <div><p class="eyebrow" data-copy="releaseEyebrow">EARLY PREVIEW</p><h2 id="release-title" data-copy="releaseTitle">Follow the build as ShotDesk grows.</h2><p data-copy="releaseBody">Check the release page for installers, platform notes, known issues, and the changelog for each preview.</p></div>
+        <div class="release-actions"><a class="button button-primary" href="https://github.com/numera11y/shotdesk/releases" target="_blank" rel="noreferrer"><span data-copy="releaseCta">View preview releases</span><span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/numera11y/shotdesk" target="_blank" rel="noreferrer"><span data-copy="sourceCta">Read the source</span><span aria-hidden="true">↗</span></a></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>shot<span class="brand-muted">desk</span></span></a><span data-copy="footer">A local-first screenshot library · Windows and Linux targets</span><a href="https://github.com/numera11y/shotdesk" target="_blank" rel="noreferrer">GitHub ↗</a></footer>
+  </body>
+</html>

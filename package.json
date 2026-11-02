@@ -1,0 +1,11 @@
+{
+  "name": "shotdesk-site",
+  "version": "0.1.0",
+  "private": false,
+  "description": "The bilingual technical website for ShotDesk.",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8080",
+    "build": "node scripts/build-site.mjs"
+  }
+}

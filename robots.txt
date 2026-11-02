@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://numera11y.github.io/shotdesk-site/sitemap.xml
