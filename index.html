@@ -33,6 +33,7 @@
       </a>
       <nav id="site-nav" aria-label="{{NAV_LABEL}}">
         <a href="#workflow" data-copy="workflowNav">Workflow</a>
+        <a href="#screens" data-copy="screensNav">App screens</a>
         <a href="#local-first" data-copy="privacyNav">Local-first</a>
         <a href="#details" data-copy="detailsNav">Image details</a>
         <a href="{{LOCAL_ROOT}}changelog/" data-copy="changelogNav">Changelog</a>
@@ -46,13 +47,30 @@
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="ocr-ambience" aria-hidden="true">
+          <svg viewBox="0 0 900 680" preserveAspectRatio="none">
+            <defs>
+              <pattern id="ocr-grid" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M56 0H0V56" fill="none" stroke="#83b7ff" stroke-opacity=".13" stroke-width="1" /></pattern>
+              <linearGradient id="ocr-beam" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#80c8a4" stop-opacity="0" /><stop offset=".48" stop-color="#80c8a4" stop-opacity=".8" /><stop offset="1" stop-color="#80c8a4" stop-opacity="0" /></linearGradient>
+            </defs>
+            <rect width="900" height="680" fill="url(#ocr-grid)" />
+            <g class="ocr-glyphs" fill="#abcdf0" font-family="Cascadia Code, Consolas, monospace">
+              <text x="76" y="128">Q4  R3V13W  ·  08:42</text><text x="132" y="244">1 2 8 0  ×  8 0 0</text>
+              <text x="286" y="358">SEARCH  /  COLORS</text><text x="104" y="492">CAPTURE_04.PNG</text><text x="402" y="590">TEXT FOUND  ·  03 LINES</text>
+            </g>
+            <g class="ocr-boxes" fill="none" stroke="#83b7ff" stroke-width="1.4">
+              <rect x="60" y="88" width="360" height="62" rx="2" /><rect x="116" y="204" width="278" height="62" rx="2" />
+              <rect x="270" y="318" width="330" height="62" rx="2" /><rect x="88" y="452" width="300" height="62" rx="2" />
+            </g>
+            <rect class="ocr-scanline" x="0" y="0" width="900" height="34" fill="url(#ocr-beam)" />
+          </svg>
+        </div>
         <div class="hero-copy">
-          <p class="eyebrow"><span class="status-dot"></span><span data-copy="eyebrow">LOCAL INDEX · TECHNICAL PREVIEW</span></p>
           <h1 id="hero-title" data-copy="headline">Find the screenshot by what it shows.</h1>
           <p class="hero-description" data-copy="intro">ShotDesk reads your chosen screenshots on your device, then lets you search the words, image details, and colors you remember.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="{{LOCAL_ROOT}}download/"><span data-copy="primaryCta">Download preview</span><span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="#app-shot"><span data-copy="secondaryCta">See the app</span><span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#screens"><span data-copy="secondaryCta">See the app</span><span aria-hidden="true">↓</span></a>
           </div>
           <div class="proof-line" aria-label="Product properties">
             <span><b>01</b><span data-copy="proofOne">Chosen folders only</span></span>
@@ -88,9 +106,29 @@
         </figure>
       </section>
 
-      <section class="app-shot-section" id="app-shot" aria-labelledby="app-shot-title">
-        <div class="app-shot-copy"><p class="eyebrow" data-copy="appShotEyebrow">SHOTDESK · PREVIEW 0.1.0</p><h2 id="app-shot-title" data-copy="appShotTitle">Your screenshot library, at a glance.</h2><p data-copy="appShotBody">Browse a local index, search the details you remember, and open a capture without losing your place.</p><span class="synthetic-disclosure" data-copy="appShotDisclosure">Synthetic sample images</span></div>
-        <figure class="app-shot-frame"><img src="./assets/shotdesk-library.png" width="1280" height="820" alt="ShotDesk desktop interface showing a screenshot library with a search field, image thumbnails and image details. The demonstration images and names are synthetic." data-copy-alt="appShotAlt" /><figcaption data-copy="appShotAlt">ShotDesk desktop interface showing a screenshot library with a search field, image thumbnails and image details. The demonstration images and names are synthetic.</figcaption></figure>
+      <section class="screen-story" id="screens" data-scroll-story aria-labelledby="screen-story-title">
+        <div class="screen-story-pin">
+          <div class="screen-story-heading">
+            <div><h2 id="screen-story-title" data-copy="screenStoryTitle">See ShotDesk at work</h2><p data-copy="screenStoryIntro">Move through a few everyday moments in your screenshot library.</p></div>
+            <div class="screen-story-meter" role="group" data-aria-label-copy="screenStoryProgressLabel"><span id="screenStoryCurrent" aria-live="polite">01</span><span class="screen-story-total">/ 03</span><div class="screen-story-meter-track" aria-hidden="true"><i id="screenStoryMeterFill"></i></div></div>
+          </div>
+          <div class="screen-story-viewport">
+            <div class="screen-story-track">
+              <article class="screen-slide" aria-labelledby="screen-library-title">
+                <div class="screen-slide-copy"><h3 id="screen-library-title" data-copy="screenLibraryTitle">Find the screenshot you remember.</h3><p data-copy="screenLibraryBody">Search a folder by filename, visible text, and color, then browse the results without moving your original files.</p><span class="screen-disclosure" data-copy="screenDisclosure">Synthetic screenshots and sample data</span></div>
+                <figure class="screen-slide-figure"><img src="./assets/shotdesk-library.png" width="1280" height="820" alt="ShotDesk library with four fictional screenshots, search bar, and local indexing status." data-copy-alt="screenLibraryAlt" /><figcaption data-copy="screenLibraryCaption">ShotDesk 0.1.0 · demonstration library</figcaption></figure>
+              </article>
+              <article class="screen-slide" aria-labelledby="screen-details-title">
+                <div class="screen-slide-copy"><h3 id="screen-details-title" data-copy="screenDetailsTitle">Open a capture and see what’s inside.</h3><p data-copy="screenDetailsBody">Review its image details, colors, recognized words, and collection membership in one place.</p><span class="screen-disclosure" data-copy="screenDisclosure">Synthetic screenshots and sample data</span></div>
+                <figure class="screen-slide-figure"><img src="./assets/shotdesk-details.png" width="1280" height="820" alt="ShotDesk capture details panel with fictional image metadata, recognized text, and colors." data-copy-alt="screenDetailsAlt" /><figcaption data-copy="screenDetailsCaption">ShotDesk 0.1.0 · capture details</figcaption></figure>
+              </article>
+              <article class="screen-slide" aria-labelledby="screen-collections-title">
+                <div class="screen-slide-copy"><h3 id="screen-collections-title" data-copy="screenCollectionsTitle">Keep related screenshots together.</h3><p data-copy="screenCollectionsBody">Create collections for projects, research, or anything you want to find again.</p><span class="screen-disclosure" data-copy="screenDisclosure">Synthetic screenshots and sample data</span></div>
+                <figure class="screen-slide-figure"><img src="./assets/shotdesk-collections.png" width="1280" height="820" alt="ShotDesk collections screen showing three fictional project collections and their screenshot counts." data-copy-alt="screenCollectionsAlt" /><figcaption data-copy="screenCollectionsCaption">ShotDesk 0.1.0 · collections</figcaption></figure>
+              </article>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="workflow-section" id="workflow" aria-labelledby="workflow-title">

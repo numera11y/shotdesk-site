@@ -11,7 +11,7 @@ const pages = [
   { slug: "changelog", source: "pages/changelog.html", key: "changelog" },
 ];
 
-for (const file of ["index.html", "styles.css", "site-pages.css", "main.js", "translations.js", "favicon.svg", "robots.txt", "assets/shotdesk-library.png", ...pages.slice(1).map((page) => page.source)]) {
+for (const file of ["index.html", "styles.css", "site-pages.css", "main.js", "translations.js", "favicon.svg", "robots.txt", "assets/shotdesk-library.png", "assets/shotdesk-details.png", "assets/shotdesk-collections.png", ...pages.slice(1).map((page) => page.source)]) {
   await access(file);
 }
 
@@ -143,7 +143,15 @@ function localize(html, locale) {
   const keys = [...html.matchAll(/data-copy="([^"]+)"/g)].map((match) => match[1]);
   for (const key of keys) if (!(key in copy)) throw new Error(`Missing ${locale} website translation for: ${key}`);
   return html.replace(/<([a-z][a-z0-9]*)\b([^>]*\bdata-copy="([^"]+)"[^>]*)>[\s\S]*?<\/\1>/gi, (_match, tag, attributes, key) => `<${tag}${attributes}>${escapeHtml(copy[key])}</${tag}>`)
-    .replace(/data-copy-alt="([^"]+)"/g, (_match, key) => `alt="${escapeHtml(copy[key])}"`)
+    .replace(/<img\b[^>]*>/gi, (tag) => {
+      const key = tag.match(/\bdata-copy-alt="([^"]+)"/)?.[1];
+      if (!key) return tag;
+      if (!(key in copy)) throw new Error(`Missing ${locale} image-alt translation for: ${key}`);
+      const withoutKey = tag.replace(/\sdata-copy-alt="[^"]+"/, "");
+      return /\balt="[^"]*"/.test(withoutKey)
+        ? withoutKey.replace(/\balt="[^"]*"/, `alt="${escapeHtml(copy[key])}"`)
+        : withoutKey.replace(/\s*\/?>(?=$)/, ` alt="${escapeHtml(copy[key])}"$&`);
+    })
     .replace(/data-aria-label-copy="([^"]+)"/g, (_match, key) => `aria-label="${escapeHtml(copy[key])}"`)
     .replace('<html lang="en-US">', `<html lang="${locale}">`);
 }
@@ -178,7 +186,7 @@ for (const locale of locales) {
     const sourceRoot = page.key === "home" ? "./" : "../";
     let html = page.key === "home" ? homeTemplate : pageTemplates[page.key];
     html = localize(html, locale);
-    for (const asset of ["favicon.svg", "styles.css", "site-pages.css", "main.js", ...(page.key === "home" ? ["assets/shotdesk-library.png"] : [])]) {
+    for (const asset of ["favicon.svg", "styles.css", "site-pages.css", "main.js", ...(page.key === "home" ? ["assets/shotdesk-library.png", "assets/shotdesk-details.png", "assets/shotdesk-collections.png"] : [])]) {
       for (const attribute of ["href", "src"]) html = html.replaceAll(`${attribute}="${sourceRoot}${asset}"`, `${attribute}="${relativeRoot}${asset}"`);
     }
     if (page.key === "download") html = html.replace("<!-- GENERATED_DOWNLOAD_CONTENT -->", renderDownloads(releases, locale));
@@ -213,6 +221,7 @@ for (const { outputPath, canonical } of generatedPages) {
   if (!schema) throw new Error(`Missing structured data in ${outputPath}`);
   JSON.parse(schema);
   if (/<img\b(?![^>]*\balt=)[^>]*>/i.test(html)) throw new Error(`Image without alt text in ${outputPath}`);
+  if (/<img\b[^>]*\balt="[^"]*"[^>]*\balt="/i.test(html)) throw new Error(`Image with duplicate alt attributes in ${outputPath}`);
   for (const [, link] of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
     if (!link || link.startsWith("#") || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(link)) continue;
     const resolved = new URL(link, canonical);

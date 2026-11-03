@@ -1,5 +1,5 @@
 # Website image provenance
 
-## `shotdesk-library.png`
+## ShotDesk product screens
 
-Captured from the ShotDesk 0.1.0 application interface for the product website. The browser preview was populated with synthetic demonstration images and filenames; no personal captures or local file paths are shown. The page displays this as a clearly labeled product-interface screenshot, not an illustrative interface mockup.
+`shotdesk-library.png`, `shotdesk-details.png`, and `shotdesk-collections.png` are captures of the real ShotDesk 0.1.0 application frontend in its desktop interface mode. A temporary local test bridge supplied fictional screenshots, metadata, recognized text, and collection names; no personal images or user library data were used. The site labels the content as synthetic demonstration data.

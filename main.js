@@ -85,3 +85,65 @@ if (header) {
     });
   }, { passive: true });
 }
+
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const hero = document.querySelector(".hero");
+if (hero && !reducedMotion.matches && "IntersectionObserver" in window) {
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    hero.classList.toggle("is-ocr-visible", entry.isIntersecting);
+  }, { threshold: 0.08 });
+  heroObserver.observe(hero);
+}
+
+const screenStory = document.querySelector("[data-scroll-story]");
+const screenTrack = screenStory?.querySelector(".screen-story-track");
+const screenViewport = screenStory?.querySelector(".screen-story-viewport");
+const storySlides = [...(screenStory?.querySelectorAll(".screen-slide") || [])];
+const storyCurrent = document.querySelector("#screenStoryCurrent");
+const storyMeterFill = document.querySelector("#screenStoryMeterFill");
+const desktopStory = window.matchMedia("(min-width: 901px)");
+let storyEnabled = false;
+let storyFrame = 0;
+let activeStoryIndex = -1;
+
+function updateScreenStory() {
+  storyFrame = 0;
+  if (!storyEnabled || !screenStory || !screenTrack || !screenViewport || !storySlides.length) return;
+  const travel = Math.max(1, screenStory.offsetHeight - window.innerHeight);
+  const distance = Math.min(travel, Math.max(0, -screenStory.getBoundingClientRect().top));
+  const position = (distance / travel) * (storySlides.length - 1);
+  const nextIndex = Math.min(storySlides.length - 1, Math.round(position));
+  screenTrack.style.transform = `translate3d(${-position * screenViewport.clientWidth}px, 0, 0)`;
+  screenStory.classList.toggle("is-active", distance > 0 && distance < travel);
+  if (storyMeterFill) storyMeterFill.style.transform = `scaleX(${(nextIndex + 1) / storySlides.length})`;
+  if (nextIndex !== activeStoryIndex) {
+    activeStoryIndex = nextIndex;
+    if (storyCurrent) storyCurrent.textContent = String(nextIndex + 1).padStart(2, "0");
+    storySlides.forEach((slide, index) => slide.classList.toggle("is-current", index === nextIndex));
+  }
+}
+
+function configureScreenStory() {
+  if (!screenStory || !screenTrack || !storySlides.length) return;
+  storyEnabled = desktopStory.matches && !reducedMotion.matches;
+  document.documentElement.classList.toggle("has-scroll-story", storyEnabled);
+  if (!storyEnabled) {
+    screenStory.classList.remove("is-active");
+    screenTrack.style.removeProperty("transform");
+    storySlides.forEach((slide) => slide.classList.remove("is-current"));
+    activeStoryIndex = -1;
+    return;
+  }
+  updateScreenStory();
+}
+
+if (screenStory && screenTrack && storySlides.length) {
+  window.addEventListener("scroll", () => {
+    if (!storyEnabled || storyFrame) return;
+    storyFrame = window.requestAnimationFrame(updateScreenStory);
+  }, { passive: true });
+  window.addEventListener("resize", configureScreenStory, { passive: true });
+  desktopStory.addEventListener("change", configureScreenStory);
+  reducedMotion.addEventListener("change", configureScreenStory);
+  configureScreenStory();
+}
