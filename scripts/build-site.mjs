@@ -1,6 +1,6 @@
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { translations } from "../translations.js";
+import { friendlyReleaseNotes, translations } from "../translations.js";
 
 const siteUrl = "https://numera11y.github.io/shotdesk-site";
 const repositoryUrl = "https://github.com/numera11y/shotdesk";
@@ -91,12 +91,19 @@ function renderDownloads(releases, locale) {
 function renderChangelog(releases, locale) {
   const copy = translations[locale];
   if (!releases.length) return `<p class="empty-release">${copy.changelogNoReleases}</p>`;
+  const latest = latestRelease(releases);
+  const downloadUrl = `${siteUrl}/${locale === "fr-FR" ? "fr/" : ""}download/`;
   return releases.map((release) => {
     const date = new Date(release.published_at);
     const formattedDate = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeZone: "UTC" }).format(date);
+    const customerNotes = friendlyReleaseNotes[release.tag_name]?.[locale];
+    const summary = customerNotes?.summary || copy.releaseFallbackSummary;
+    const highlights = customerNotes?.highlights || [];
     const notes = markdownNotes(release.body || "");
     const assets = (release.assets || []).map((asset) => `<a class="release-asset" href="${escapeHtml(asset.browser_download_url)}">${escapeHtml(asset.name)} <span aria-hidden="true">↓</span></a>`).join("");
-    return `<article class="release-entry"><header class="release-entry-header"><h2>${escapeHtml(release.name || release.tag_name)}<span class="version-chip">${escapeHtml(release.tag_name)}</span></h2><time datetime="${escapeHtml(date.toISOString())}">${formattedDate}</time></header><div class="release-notes">${notes || `<p>${copy.changelogNoReleases}</p>`}</div>${assets ? `<h3 class="release-assets-title">${copy.releaseAssets}</h3><div class="release-assets">${assets}</div>` : ""}<a class="release-source-link" href="${escapeHtml(release.html_url)}">${copy.releaseOriginalNotes} ↗</a></article>`;
+    const highlightList = highlights.length ? `<ul class="release-highlights">${highlights.map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join("")}</ul>` : "";
+    const downloadAction = latest?.tag_name === release.tag_name && (release.assets || []).length ? `<a class="button button-primary release-download" href="${downloadUrl}">${copy.releaseDownloadCta} <span aria-hidden="true">→</span></a>` : "";
+    return `<article class="release-entry"><header class="release-entry-header"><h2>${copy.releaseVersionLabel} ${escapeHtml(release.tag_name.replace(/^v/, ""))}<span class="version-chip">${copy.releasePreviewLabel}</span></h2><time datetime="${escapeHtml(date.toISOString())}">${formattedDate}</time></header><div class="release-overview"><p class="release-summary">${escapeHtml(summary)}</p>${highlightList}${downloadAction ? `<div class="release-user-actions">${downloadAction}</div>` : ""}</div><details class="release-technical"><summary>${copy.releaseTechnicalSummary}</summary><div class="release-technical-content"><p>${copy.releaseTechnicalIntro}</p><div class="release-notes">${notes || `<p>${copy.changelogNoReleases}</p>`}</div>${assets ? `<h3 class="release-assets-title">${copy.releaseAssets}</h3><div class="release-assets">${assets}</div>` : ""}<a class="release-source-link" href="${escapeHtml(release.html_url)}">${copy.releaseOriginalNotes} ↗</a></div></details></article>`;
   }).join("\n");
 }
 
@@ -150,6 +157,7 @@ function replaceTokens(html, tokens) {
 
 const releases = await fetchReleases();
 const currentRelease = latestRelease(releases);
+for (const release of releases) if (!friendlyReleaseNotes[release.tag_name]) console.warn(`Add a customer-facing summary for ${release.tag_name} to friendlyReleaseNotes in translations.js.`);
 const homeTemplate = await readFile("index.html", "utf8");
 const pageTemplates = Object.fromEntries(await Promise.all(pages.slice(1).map(async (page) => [page.key, await readFile(page.source, "utf8")])));
 await rm("dist", { recursive: true, force: true });

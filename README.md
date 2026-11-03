@@ -11,7 +11,7 @@ npm run build
 python -m http.server 8080 --directory dist
 ```
 
-Open `http://localhost:8080`. The build reads published releases from the ShotDesk GitHub API so package links, checksums, versions, and release notes stay current. A `GITHUB_TOKEN` is optional for local builds and provided by GitHub Actions on deploy. The site has no analytics, cookies, third-party fonts, or runtime dependencies.
+Open `http://localhost:8080`. The build reads published releases from the ShotDesk GitHub API so package links, checksums, versions, and original release notes stay current. Add a concise, customer-facing summary for each new app version to `friendlyReleaseNotes` in `translations.js`; the technical notes remain available in the collapsed details. A `GITHUB_TOKEN` is optional for local builds and provided by GitHub Actions on deploy. The site has no analytics, cookies, third-party fonts, or runtime dependencies.
 
 ## Publishing
 
